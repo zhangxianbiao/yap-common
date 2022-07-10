@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 // 需要加上这个，因为测试的类和主运行类不在一个包下，测试时扫描不到，测试类会报No qualifying bean
 @ComponentScan(basePackages = "com.yap")
 public class YapCommonApplication {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         SpringApplication.run(YapCommonApplication.class, args);
     }
 

@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * bean JavaConfig 配置文件
  */
 @Configuration
-public class AsyncCommunicationClientConfig {
+public class AsyncYapHttpClientConfig {
 
     @Bean
     public AsyncHttpClientConfig asyncHttpClientConfig() {

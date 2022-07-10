@@ -81,7 +81,6 @@ public class AsyncYapHttpClient implements HttpClient {
                         long rt = System.currentTimeMillis() - startTime;
 
                         if (response.getStatusCode() != Consts.HTTP_STATUS_OK) {
-
                             log.error("error");// todo
                             InternalHttpClientException exception = new InternalHttpClientException(
                                     "HttpStatusCode=" + response.getStatusCode() + ", URL=" + urlWithParams

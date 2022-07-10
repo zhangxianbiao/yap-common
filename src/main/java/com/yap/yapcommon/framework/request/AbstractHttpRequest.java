@@ -54,7 +54,10 @@ public abstract class AbstractHttpRequest<Output, Input, Prop extends UpstreamPr
 
         Mono<Optional<Output>> outputMono = getAsyncYapHttpClient().request(httpRequest)
                 .map(response -> readResponseBody(response))
+                //.then()
+                .doOnNext(x -> System.out.println("on next:"))
                 .doOnSuccess(bodyStringOptional -> {
+                    //
                     System.out.println("add success debug info");
                 })
                 .doOnError(error -> {
