@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+debug: false
+
+do:
+  person:
+    name: zxb
+    age: 18
+
+# 上游配置
+# 松散绑定，-后面跟着的字母默认是大写，connect-timeout 可以绑定 connectTimeout
+upstream:
+  baidu:
+    protocol: http
+    method: get
+    host: www.baidu.com
+    port: 80
+    path: /robots.txt
+    connect-timeout: 1000
+    request-timeout: 2000
