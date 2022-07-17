@@ -49,18 +49,21 @@ public class PersonController {
 
         if ("1".equals(type)) {
             return Mono.just(new HashMap<>(){{
-                put("a", "b");
+                put("code", 1);
+                put("status", "success");
                 put("b", "c");
             }});
         }else if("2".equals(type)) {
             Person person = new Person("1", "zhangsan", "18");
             return Mono.just(new HashMap<>(){{
-                put("c", "b");
-                put("d", person);
+                put("code", 1);
+                put("status", "success");
+                put("person", person);
             }});
         }else {
             return Mono.just(new HashMap<>(){{
-                put("a", "param error");
+                put("code", 1);
+                put("status", "param error");
             }});
         }
     }
