@@ -1,8 +1,6 @@
-package com.yap.yapcommon;
+package com.yap.yapcommon.config;
 
 import com.yap.yapcommon.handler.MainHandler;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.http.server.reactive.ReactorHttpHandlerAdapter;
@@ -11,20 +9,20 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.netty.http.server.HttpServer;
 
+import javax.annotation.PostConstruct;
+
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 
 /**
  *
- * 还有问题，报空指针，没有完成注入 todo
+ * 无法注入getBaiduResponse todo zxb，后续再研究，看下spring boot 的加载过程
  */
-public class Server {
+public class RouterServer {
 
-    public RouterFunction<ServerResponse> routerFunction() {
-        MainHandler handler = new MainHandler();
-
-        return RouterFunctions.route(
-                GET("/testing").and(accept(MediaType.APPLICATION_JSON)), handler::getBaiduResponse);
+    @PostConstruct
+    public void init() {
+        createFluxReactorServer();
     }
 
     public void createFluxReactorServer() {
@@ -38,10 +36,11 @@ public class Server {
         httpServer.handle(adapter).port(8081).bindNow();
     }
 
-    public static void main(String[] args) throws Exception{
-        Server server = new Server();
-        server.createFluxReactorServer();
-        System.out.println("Server stated, press any key to exit");
-        System.in.read();
+    public RouterFunction<ServerResponse> routerFunction() {
+        MainHandler mainHandler = new MainHandler();
+        return RouterFunctions.route(
+                GET("/testing").and(accept(MediaType.APPLICATION_JSON)),
+                mainHandler::getBaiduResponse);
     }
+
 }
