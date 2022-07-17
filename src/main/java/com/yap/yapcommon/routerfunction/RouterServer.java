@@ -1,6 +1,7 @@
-package com.yap.yapcommon.config;
+package com.yap.yapcommon.routerfunction;
 
-import com.yap.yapcommon.handler.MainHandler;
+import com.yap.yapcommon.routerfunction.MainHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.http.server.reactive.ReactorHttpHandlerAdapter;
@@ -11,8 +12,7 @@ import reactor.netty.http.server.HttpServer;
 
 import javax.annotation.PostConstruct;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
-import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 
 /**
  *
@@ -20,8 +20,12 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
  */
 public class RouterServer {
 
+    @Autowired
+    private MainHandler mainHandler;
+
     @PostConstruct
     public void init() {
+        System.out.println("Init RouterServer...");
         createFluxReactorServer();
     }
 
@@ -37,10 +41,17 @@ public class RouterServer {
     }
 
     public RouterFunction<ServerResponse> routerFunction() {
-        MainHandler mainHandler = new MainHandler();
-        return RouterFunctions.route(
-                GET("/testing").and(accept(MediaType.APPLICATION_JSON)),
-                mainHandler::getBaiduResponse);
+
+        // MainHandler 不能new, 否则getBaiduResponse 里面的 BaiduRequest 就无法注入了
+        // 必须都得使用Autowired
+        //MainHandler mainHandler = new MainHandler();
+        return RouterFunctions
+                .route(
+                    GET("/router/baidu").and(accept(MediaType.TEXT_PLAIN)),
+                    mainHandler::getBaiduResponse)
+                .andRoute(
+                      GET("/router/person").and(accept(MediaType.TEXT_PLAIN)),
+                      mainHandler::getLocalResponse);
     }
 
 }

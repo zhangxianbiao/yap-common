@@ -19,3 +19,12 @@ upstream:
     path: /robots.txt
     connect-timeout: 1000
     request-timeout: 2000
+
+  localhost:
+    protocol: http
+    method: get
+    host: 127.0.0.1
+    port: 8080
+    path: /person/getbytype
+    connect-timeout: 1000
+    request-timeout: 2000

@@ -40,6 +40,8 @@ public abstract class AbstractHttpRequest<Output, Input, Prop extends UpstreamPr
         StringBuilder sb = new StringBuilder(prop.getProtocol().name())
                 .append("://")
                 .append(prop.getHost())
+                .append(":")
+                .append(prop.getPort())
                 .append(prop.getPath());
 
         return sb.toString();

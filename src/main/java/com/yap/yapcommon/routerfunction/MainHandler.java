@@ -1,6 +1,7 @@
-package com.yap.yapcommon.handler;
+package com.yap.yapcommon.routerfunction;
 
 import com.yap.yapcommon.request.BaiduRequest;
+import com.yap.yapcommon.request.LocalRouterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -14,18 +15,28 @@ public class MainHandler {
     @Autowired
     private BaiduRequest baiduRequest;
 
-    // baiduRequest 为null, 无法完成注入？ todo zxb
+    @Autowired
+    private LocalRouterRequest localRouterRequest;
+
     public Mono<ServerResponse> getBaiduResponse(ServerRequest serverRequest) {
-        Mono<ServerResponse> serverResponseMono;
         return baiduRequest.request()
                 .map(x -> x.get())
                 .flatMap(x -> {
                     return ServerResponse
                             .ok()
-                            .contentType(MediaType.TEXT_PLAIN)
+                            //.contentType(MediaType.TEXT_PLAIN)
                             .body(Mono.justOrEmpty(x), Object.class);
                         });
     }
 
+    public Mono<ServerResponse> getLocalResponse(ServerRequest serverRequest) {
+        return localRouterRequest.request()
+                .map(x -> x.get())
+                .flatMap(x -> {
+                    return ServerResponse
+                            .ok()
+                            .body(Mono.justOrEmpty(x), Object.class);
+                        });
+    }
 
 }

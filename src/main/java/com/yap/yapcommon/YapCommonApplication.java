@@ -13,8 +13,11 @@ public class YapCommonApplication {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(YapCommonApplication.class, args);
 
+        /*
         ReactorWebClientTest reactorWebClientTest = new ReactorWebClientTest();
         reactorWebClientTest.consume2();
+
+         */
     }
 
 }

@@ -10,28 +10,24 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 @Component
-//@EnableConfigurationProperties(BaiduUpstreamProperties.class)
-public class BaiduRequest extends AbstractHttpRequest<String, String, BaiduUpstreamProperties> {
-
+public class LocalRouterRequest extends AbstractHttpRequest<String, Object, LocalRouterUpstreamProperties> {
     @Getter
     @Autowired
-    BaiduUpstreamProperties upstreamProperties;
+    LocalRouterUpstreamProperties upstreamProperties;
 
     @Getter
     @Autowired
     AsyncYapHttpClient asyncYapHttpClient;
 
-    public BaiduRequest() {
-        System.out.println("Init BaiduRequest...");
-    }
 
     public HttpRequest doBuildRequest(HttpRequest.HttpRequestBuilder httpRequestBuilder) {
-        return httpRequestBuilder.requestParams(new HashMap<>())
+        return httpRequestBuilder.requestParams(new HashMap<>() {{put("type", "2");}})
                 .build();
     }
     @Override
     public String covertBodyToOutput(String body) {
+
+        // todo  写DO 并进行转换 string -> json
         return body;
     }
-
 }
