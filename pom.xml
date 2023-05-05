@@ -98,6 +98,8 @@
 
 
     <build>
+        <outputDirectory>/Users/zhangxianbiao/code/output/yap-common/classes</outputDirectory>
+        <testOutputDirectory>/Users/zhangxianbiao/code/output/yap-common/test-classes</testOutputDirectory>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
